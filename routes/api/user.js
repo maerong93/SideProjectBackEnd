@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const commonModule = require('./common/module'); // require사용시 expor
+require('dotenv').config();
+
 
 
 router.get('/login', (req, res, next) => {
+    console.log(process.env.DB_HOST);
     const jsonData = commonModule.toJsonData('success', '로그인 성공');
     res.send(jsonData);
 })
