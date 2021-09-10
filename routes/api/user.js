@@ -5,6 +5,30 @@ require('dotenv').config();
 
 
 
+/**
+ * @swagger
+ * /user/login:
+ *  get:
+ *      tags: 
+ *       - user
+ *      summary: "로그인 처리"
+ *      description: "아이디 비밀번호 필수"
+ *      produces: 
+ *      - "application/json"
+ *      parameters:
+ *      - name : "id"
+ *        in: "query"
+ *        description: "회원아이디"
+ *        required: true
+ *        type: "string"
+ *      - name : "password"
+ *        in : "query"
+ *        description: "비밀번호"
+ *        required: true
+ *      responses:
+ *          "200":
+ *              description: "successful operation"        
+ */
 router.get('/login', (req, res, next) => {
     console.log(process.env.DB_HOST);
     const jsonData = commonModule.toJsonData('success', '로그인 성공');
