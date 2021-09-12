@@ -7,7 +7,7 @@ require('dotenv').config();
 
 /**
  * @swagger
- * /user/login:
+ * /api/user/login:
  *  get:
  *      tags: 
  *       - user
@@ -16,7 +16,7 @@ require('dotenv').config();
  *      produces: 
  *      - "application/json"
  *      parameters:
- *      - name : "id"
+ *      - name : "mb_id"
  *        in: "query"
  *        description: "회원아이디"
  *        required: true
@@ -31,7 +31,15 @@ require('dotenv').config();
  */
 router.get('/login', (req, res, next) => {
     console.log(process.env.DB_HOST);
-    const jsonData = commonModule.toJsonData('success', '로그인 성공');
+    //const params = req.params; // /user/:id/:pwd 할때 사용함
+    //console.log(params);
+    const mb_id = req.param('mb_id');
+    const password = req.param('password');
+    console.log(mb_id, password);
+
+    let data = Array();
+    data.push({ mb_id: mb_id, password: password, session: 'kalsjdfehiofhewf---' });
+    const jsonData = commonModule.toJsonData('success', '로그인 성공', data);
     res.send(jsonData);
 })
 
