@@ -1,9 +1,11 @@
 const express = require('express');
+const mysql = require('mysql2/promise');
 const router = express.Router();
 const commonModule = require('./common/module'); // require사용시 expor
-const pool = require('../../lib/mysql2Pool');
+const poolConnection = require('../../lib/mysql2Pool');
 require('dotenv').config();
 const { body, validationResult } = require('express-validator'); // 유효성 검사
+
 
 /**
  * @swagger
@@ -26,6 +28,11 @@ const { body, validationResult } = require('express-validator'); // 유효성 �
  *        description: "회원 비밀번호"
  *        required: true
  *        type: "string"
+ *      - name : "mb_name"
+ *        in: "formData"
+ *        description: "회원명"
+ *        required: ture
+ *        type: "string" 
  *      - name : "mb_email"
  *        in: "formData"
  *        description: "이메일"
@@ -62,6 +69,7 @@ router.post(
     [
         body('mb_id', '아이디 입력하세요').notEmpty(),
         body('mb_password', '패스워드 입력하세요').notEmpty(),
+        body('mb_name', '이름 입력하세요').notEmpty(),
         body('mb_email', '이메일 올바르지않습니다.').isEmail().notEmpty(),
         body('mb_phone', '핸드폰 형식이 올바르지않습니다.').isMobilePhone().notEmpty(),
         body('mb_addr1', '주소1을 입력하세요').notEmpty(),
@@ -80,15 +88,17 @@ router.post(
         next();
     }
     , async (req, res, next) => {
-    
         
-    console.log('=====req2=====');
-    console.log(req.body);
+        let sql = " INSERT INTO test(name) VALUES(?) ";
+        let result = await poolConnection.query(sql, [req.body.mb_name]);
+
+        console.log('=====req2=====');
+        console.log(req.body);
     
     
-    console.log('hello2222');
-    const jsonData = commonModule.toJsonData('success', '회원 가입 성공1111');
-    res.send(jsonData);
+        console.log('hello2222');
+        const jsonData = commonModule.toJsonData('success', '회원 가입 성공1111');
+        res.send(jsonData);
 });
 /**
  * @swagger
