@@ -3,6 +3,9 @@ const mysql = require('mysql2/promise');
 const router = express.Router();
 const commonModule = require('./common/module'); // require사용시 expor
 const poolConnection = require('../../lib/mysql2Pool');
+const date = require('date-and-time')
+const nowDateTime = date.format(new Date(), 'YYYY-MM-DD hh:mm:ss');
+const requestIp = require('request-ip');
 require('dotenv').config();
 const { body, validationResult } = require('express-validator'); // 유효성 검사
 
@@ -76,7 +79,7 @@ router.post(
         body('mb_addr2', '주소2을 입력하세요').notEmpty()
     ]
     , async (req, res, next) => {
-        console.log('=====req1=====');
+        //console.log('=====req1=====');
         const errors = validationResult(req).errors //에러 배열에 접근
         if (Object.keys(errors).length !== 0) {
             let msg = errors.map((item) => {
@@ -88,9 +91,46 @@ router.post(
         next();
     }
     , async (req, res, next) => {
+        const clientIp = requestIp.getClientIp(req);
+        try {
+            //let sql = " INSERT INTO test(mb_id, mb_name, mb_level, mb_sex, ) VALUES ? ";
+            let sql2 = `
+                INSERT INTO member
+                ( mb_id,
+                  mb_name,
+                  mb_level,
+                  mb_sex,
+                  mb_email,
+                  mb_tel,
+                  mb_phone,
+                  mb_addr1,
+                  mb_addr2,
+                  mb_ip,
+                  in_datetime )
+                VALUES (?, ?, ? , ?, ?, ?, ?, ? , ?, ?, ?)
+            `;
+            let values = [
+                req.body.mb_id,
+                req.body.mb_name ,
+                1 ,
+                'M' ,
+                req.body.mb_email ,
+                req.body.mb_tel,
+                req.body.mb_phone ,
+                req.body.mb_addr1 ,
+                req.body.mb_addr2,
+                clientIp,
+                nowDateTime,
+            ];
+            await poolConnection.query(sql2, values);
+            console.log('success!');
+        } catch (err) {
+            const jsonData = commonModule.toJsonData('success', '쿼리 에러', err);
+            console.log('에러 발생');
+            res.status(400).json(jsonData);
+            throw err;
+        } 
         
-        let sql = " INSERT INTO test(name) VALUES(?) ";
-        let result = await poolConnection.query(sql, [req.body.mb_name]);
 
         console.log('=====req2=====');
         console.log(req.body);
