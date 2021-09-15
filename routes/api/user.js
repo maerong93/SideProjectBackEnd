@@ -8,6 +8,7 @@ const nowDateTime = date.format(new Date(), 'YYYY-MM-DD hh:mm:ss');
 const requestIp = require('request-ip');
 require('dotenv').config();
 const { body, validationResult } = require('express-validator'); // 유효성 검사
+const commonLib = require('../../lib/common.lib');
 
 
 /**
@@ -91,6 +92,15 @@ router.post(
         next();
     }
     , async (req, res, next) => {
+        commonLib.getMember(req.body.mb_id).then((row) => {
+            if (row.mb_id !== '') {
+                const jsonData = commonModule.toJsonData('error', '존재하는 회원 아이디 입니다.', { mb_id: req.body.mb_id });
+                res.status(400).json(jsonData);
+            }
+        });
+        next();
+    }
+    , async (req, res, next) => {
         const clientIp = requestIp.getClientIp(req);
         try {
             //let sql = " INSERT INTO test(mb_id, mb_name, mb_level, mb_sex, ) VALUES ? ";
@@ -125,7 +135,7 @@ router.post(
             await poolConnection.query(sql2, values);
             console.log('success!');
         } catch (err) {
-            const jsonData = commonModule.toJsonData('success', '쿼리 에러', err);
+            const jsonData = commonModule.toJsonData('error', '쿼리 에러', err);
             console.log('에러 발생');
             res.status(400).json(jsonData);
             throw err;
