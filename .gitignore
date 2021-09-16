@@ -119,3 +119,5 @@ dist
 
 # 개인 
 note.txt
+
+data/*

@@ -6,7 +6,20 @@ var logger = require('morgan');
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerOptions = require('./swagger/basic').swaggerOption;
+const fs = require('fs');
+require('dotenv').config();
 
+const dir = process.env.FILE_PATH; // 내컴 폴더 경로
+const dirItem = process.env.FILE_ITEM_PATH; // 내컴 item 폴더 경로
+
+// data 최상위 폴더 생성
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir);
+}
+// item 폴더 생성
+if (!fs.existsSync(dirItem)) {
+  fs.mkdirSync(dirItem);
+}
 
 
 var indexRouter = require('./routes/index');
