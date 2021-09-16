@@ -12,6 +12,7 @@ const swaggerOptions = require('./swagger/basic').swaggerOption;
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const apiUser = require('./routes/api/user');
+const apiItem = require('./routes/api/item');
 const apiPath = '/api';
 
 var app = express();
@@ -31,6 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use(`${apiPath}/user`, apiUser);
+app.use(`${apiPath}/item`, apiItem);
+
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs/', swaggerUI.serve, swaggerUI.setup(swaggerDocs));

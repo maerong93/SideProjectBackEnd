@@ -17,7 +17,7 @@ const checkMember = async (mb_id, mb_password) => {
 // prams : 
 //          mb_id (회원아이디)
 const checkMember2 = async (mb_id) => {
-    const [rows, fields] = await mysql2Pool.execute(" SELECT COUNT(id) AS cnt FROM member WHERE mb_id = ? AND mb_password = ? LIMIT 1 ", [mb_id]);
+    const [rows, fields] = await mysql2Pool.execute(" SELECT COUNT(id) AS cnt FROM member WHERE mb_id = ? LIMIT 1 ", [mb_id]);
     return rows[0];
 }
 

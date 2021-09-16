@@ -22,6 +22,9 @@ basicExports.swaggerOption = {
         ],
         schemes: ['http']
     },
-    apis:["./routes/api/user.js"]
+    apis: [
+        "./routes/api/user.js",
+        "./routes/api/item.js"
+    ]
 }
 

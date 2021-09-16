@@ -239,12 +239,13 @@ router.get('/info'
     , verifyToken
     , async (req, res, next) => {
         middelwareMember.checkMember2(req.param('mb_id')).then((row) => {
+            console.log('/info');
             if (row.cnt === 0) {
-                const jsonData = commonModule.toJsonData('error', '등록된 정보가 아닙니다.', [{}]);
+                const jsonData = commonModule.toJsonData('error', '등록된 회원이 아닙니다.', []);
                 return res.status(400).json(jsonData);
             }
         })
-        next();
+        return next();
     }
     , async (req, res, next) => {
         middelwareMember.getUserInfo(req.param('mb_id')).then((row) => {
