@@ -13,11 +13,11 @@ basicExports.swaggerOption = {
                 description: "Everything about your Pets"
             },
             servers: ["http://localhost:3000"]
-        },
+        },        
         tags: [
             {
                 name: "user",
-                description : "회원에 관한 처리"
+                description: "회원에 관한 처리",
             }
         ],
         schemes: ['http']

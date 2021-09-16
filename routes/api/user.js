@@ -65,9 +65,11 @@ const { verifyToken } = require('../../middlewares/middlewaresJWT');
  *        description: "주소2"
  *        required: true
  *        type: "string"
+ *      security : 
+ *          - jwt: []
  *      responses:
  *          "200":
- *              description: "successful operation"
+ *              description: "success"
  *          "400":
  *              description: "error"
  */
@@ -89,7 +91,7 @@ router.post(
             let msg = errors.map((item) => {
                 return { item: item.param, msg: item.msg }
             });
-            const jsonData = commonModule.toJsonData('error', '에러입니다.', msg);
+            const jsonData = commonModule.toJsonData('error', '에러입니다.', [msg]);
             res.status(400).json(jsonData);
         }
         next();
@@ -97,7 +99,7 @@ router.post(
     , async (req, res, next) => {
         commonLib.getMember(req.body.mb_id).then((row) => {
             if (row.mb_id !== '') {
-                const jsonData = commonModule.toJsonData('error', '존재하는 회원 아이디 입니다.1', { mb_id: req.body.mb_id });
+                const jsonData = commonModule.toJsonData('error', '존재하는 회원 아이디 입니다.', [{ mb_id: req.body.mb_id }]);
                 res.status(400).json(jsonData);
             }
         });
@@ -140,7 +142,7 @@ router.post(
             await poolConnection.query(sql2, values);
             console.log('success!');
         } catch (err) {
-            const jsonData = commonModule.toJsonData('error', '쿼리 에러', err);
+            const jsonData = commonModule.toJsonData('error', '쿼리 에러', [err]);
             console.log('에러 발생');
             res.status(400).json(jsonData);
             throw err;
@@ -177,13 +179,15 @@ router.post(
  *        required: true
  *      responses:
  *          "200":
- *              description: "successful operation"        
+ *              description: "successful operation"      
+ *          "400":
+ *              description: "error"  
  */
 router.get('/login'
     , async (req, res, next) => {
         middelwareMember.checkMember(req.param('mb_id'), req.param('password')).then((row) => {
             if (row.cnt === 0) {
-                const jsonData = commonModule.toJsonData('error', '다시 로그인 시도해주세요.', { mb_id: req.body.mb_id });
+                const jsonData = commonModule.toJsonData('error', '다시 로그인 시도해주세요.', [{ mb_id: req.body.mb_id }]);
                 res.status(400).json(jsonData);
             }
         })
@@ -197,18 +201,49 @@ router.get('/login'
                 mb_id,
                 password
             }, process.env.JWT_SECRET, {
-                expiresIn: '60m', // 60분
+                expiresIn: '7d', // 7일
                 issuer: '토큰발급자',
             });
-            const jsonData = commonModule.toJsonData('success', '토큰이 발급되었습니다.', { token: token });
+            req.body.token = token;
+            const jsonData = commonModule.toJsonData('success', '토큰이 발급되었습니다.', [{ mb_id: mb_id, token: token }]);
             return res.send(jsonData);
         } catch (err) {
-            const jsonData = commonModule.toJsonData('error', '서버 에러', { });
+            const jsonData = commonModule.toJsonData('error', '서버 에러', [{}]);
             return res.status(400).json(jsonData);
         }
-})
+    }
+)
 
-router.get('/info', (req, res, next) => {
+/**
+ * @swagger
+ * /api/user/info:
+ *  get:
+ *      tags: 
+ *       - user
+ *      summary: "회원 정보 확인"
+ *      description: "토큰, 아이디"
+ *      produces: 
+ *      - "application/json"
+ *      parameters:
+ *      - name : "authorization"
+ *        in: "header"
+ *        description: "토큰"
+ *        required: true
+ *        type: "string"
+ *      - name : "mb_id"
+ *        in : "query"
+ *        description: "회원아이디"
+ *        required: true
+ *        type: "string"
+ *      responses:
+ *          "200":
+ *              description: "successful operation"      
+ *          "400":
+ *              description: "error"  
+ */
+router.get('/info'
+    , verifyToken
+    , async (req, res, next) => {
     let jsonData = commonModule.toJsonData('warrning', '너의 정보');
     res.send(jsonData);
 })
