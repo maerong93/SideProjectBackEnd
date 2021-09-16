@@ -148,12 +148,6 @@ router.post(
             throw err;
         } 
         
-
-        console.log('=====req2=====');
-        console.log(req.body);
-    
-    
-        console.log('hello2222');
         const jsonData = commonModule.toJsonData('success', '회원 가입 성공1111');
         res.send(jsonData);
 });
@@ -244,8 +238,19 @@ router.get('/login'
 router.get('/info'
     , verifyToken
     , async (req, res, next) => {
-    let jsonData = commonModule.toJsonData('warrning', '너의 정보');
-    res.send(jsonData);
+        middelwareMember.checkMember2(req.param('mb_id')).then((row) => {
+            if (row.cnt === 0) {
+                const jsonData = commonModule.toJsonData('error', '등록된 정보가 아닙니다.', [{}]);
+                return res.status(400).json(jsonData);
+            }
+        })
+        next();
+    }
+    , async (req, res, next) => {
+        middelwareMember.getUserInfo(req.param('mb_id')).then((row) => {
+            const jsonData = commonModule.toJsonData('success', '회원 정보', [row]);
+            res.send(jsonData);
+        })
 })
 
 router.get('/payHistory', (req, res, nex) => {
