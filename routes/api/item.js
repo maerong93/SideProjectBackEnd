@@ -85,7 +85,7 @@ router.get('/list'
 router.get('/:it_id'
     , async (req, res, next) => {
         console.log(req.params.it_id);
-        return res.status(200).json({ msg: 'test' });
+        return res.send({ msg: 'test' });
     });
 
 /**
