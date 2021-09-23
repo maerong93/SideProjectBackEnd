@@ -27,11 +27,10 @@ const checkMember4 = async (req, res, next) => {
     const password = req.param('password');
     const [rows, fields] = await mysql2Pool.execute(" SELECT COUNT(id) AS cnt FROM member WHERE mb_id = ? AND mb_password = ? LIMIT 1 ", [mb_id, password]);
     if (rows[0]) {
-        
+        res.status(400).json({"hello" : "hello1"});
     } else {
-        req.status().json('')
+        res.status(400).json({"hello" : "hello"});
     }
-    
 }
 
 // 회원 정보
