@@ -1,5 +1,6 @@
 const mysql = require('mysql2/promise');
 const mysql2Pool = require('../lib/mysql2Pool');
+const commonModule = require('../routes/api/common/module'); // require사용시 expor
 require('dotenv').config();
 
 let exportsModuls = {};
@@ -21,6 +22,18 @@ const checkMember2 = async (mb_id) => {
     return rows[0];
 }
 
+const checkMember4 = async (req, res, next) => {
+    const mb_id = req.param('mb_id');
+    const password = req.param('password');
+    const [rows, fields] = await mysql2Pool.execute(" SELECT COUNT(id) AS cnt FROM member WHERE mb_id = ? AND mb_password = ? LIMIT 1 ", [mb_id, password]);
+    if (rows[0]) {
+        
+    } else {
+        req.status().json('')
+    }
+    
+}
+
 // 회원 정보
 // prams : 
 //          mb_id (회원아이디)
@@ -34,5 +47,6 @@ const getUserInfo = async (mb_id) => {
 module.exports = {
     checkMember,
     checkMember2,
-    getUserInfo
+    getUserInfo,
+    checkMember4
 }

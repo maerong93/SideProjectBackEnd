@@ -130,17 +130,16 @@ router.get('/:it_id'
  *        description: "사용 여부 (Y : 사용, N : 미사용)" 
  *        required : true
  *        type: "string"  
- *        enum: [ "Y", "N"]
  *      - name : "it_main_img"
  *        in: "formData"
  *        description: "메인 파일"
  *        required : true
  *        type : "file"
  *      - name : "mb_id"
- *        in : "formData"
- *        description: "회원아이디" 
- *        required : true
- *        type: "string" 
+ *        in: "formData"
+ *        description: "회원아이디"
+ *        required: ture
+ *        type: "string"
  *      - name : "mb_name"
  *        in : "formData"
  *        description: "회원명" 
@@ -159,38 +158,38 @@ router.post('/'
         body('it_info', '상품정보 5글자에서 255이내로 입력해주세요.').isLength({ min: 5, max:255 }),
         body('it_price', '상품값을 올바르게 입력해주세요.').isNumeric().isLength({ min: 0 }),
         body('it_use', '사용여부를 선택해주세요.').isIn(['Y', 'N']),
-        //body('it_main_img', '메인 이미지를 업로드 해주세요.').notEmpty(),
+        body('it_main_img', '메인 이미지를 업로드 해주세요.').notEmpty(),
         body('mb_id', '아이디를 입력하세요.').notEmpty(),
-        body('mb_name', '회원 명을 입력하세요.').notEmpty(),
+        body('mb_name', '회원 명을 입력하세요.').notEmpty()
     ]
     , async (req, res, next) => {
-        middelwareMember.checkMember2(req.body.mb_id).then((row) => {
-            console.log('/info');
+        console.log('/api/item/1');
+        console.log('req.body.mb_id', req.body.mb_id);
+        middelwareMember.checkMember2('hello').then((row) => {
+            console.log('/api/item/2');
             if (row.cnt === 0) {
-                const jsonData = commonModule.toJsonData('error', '등록된 회원이 아닙니다.', []);
-                return res.status(400).json(jsonData);
+                return res.status(400).json(commonModule.toJsonData('error', '등록된 회원이 아닙니다.'));
             }
-            return next();
+            return next();    
         })
         
     }
-    // , async (req, res, next) => {
-    //     upload.single('it_main_img')(req, res, function (err) {
-    //         if (err instanceof multer.MulterError) {
-    //             const jsonData = commonModule.toJsonData('error', '파일 업로드 에러야~~~!!! 빵꾸 똥꾸~~~~', [err]);
-    //             return res.status(400).json(jsonData);
-    //         } else if (err) {
-    //             const jsonData = commonModule.toJsonData('error', req.fileValidationError, [err]);
-    //             return res.status(400).json(jsonData);
-    //         } else {
-    //             return next();
-    //         }
-    //     })
-    // }
     , async (req, res, next) => {
+        upload.single('it_main_img')(req, res, function (err) {
+            if (err instanceof multer.MulterError) {
+                return res.status(400).json(jsonData = commonModule.toJsonData('error', '파일 업로드 에러야~~~!!! 빵꾸 똥꾸~~~~', [err]));
+            } else if (err) {
+                return res.status(400).json(commonModule.toJsonData('error', req.fileValidationError, [err]));
+            } else {
+                return next();
+            }
+        })
+    }
+    , async (req, res, next) => {
+        console.log('req.body.mb_id', req.body.mb_id);
         // try {
         // let sql = `
-        // INSERT INTO itemd
+        // INSERT INTO item
         // ( it_name , it_cnt, it_info , it_price ,
         //   it_use  , it_main_img     , mb_id    , mb_name,
         //   in_datetime
@@ -220,13 +219,12 @@ router.post('/'
         // await poolConnection.query(sql, values);
         // console.log('success!');
         // } catch (err) {
-        //     const jsonData = commonModule.toJsonData('error', '쿼리 에러', [err]);
         //     console.log('에러 발생');
-        //     res.status(400).json(jsonData);
         //     throw err;
+        //     return res.status(400).json(commonModule.toJsonData('error', '쿼리 에러', [err]));
+            
         // }
-        const jsonData = commonModule.toJsonData('success', '상폼 저장되었습니다.');
-        return res.json(jsonData);
+        return res.json(commonModule.toJsonData('success', '상폼 저장되었습니다.'));
 });
 
 /**

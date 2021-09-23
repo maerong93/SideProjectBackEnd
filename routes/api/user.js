@@ -178,34 +178,26 @@ router.post(
  *              description: "error"  
  */
 router.get('/login'
-    , async (req, res, next) => {
-        middelwareMember.checkMember(req.param('mb_id'), req.param('password')).then((row) => {
-            if (row.cnt === 0) {
-                const jsonData = commonModule.toJsonData('error', '다시 로그인 시도해주세요.', [{ mb_id: req.body.mb_id }]);
-                res.status(400).json(jsonData);
-            }
-        })
-        next();
-    }
-    , async (req, res, next) => {
-        try {
-            const mb_id = req.param('mb_id');
-            const password = req.param('password');
-            const token = jwt.sign({
-                mb_id,
-                password
-            }, process.env.JWT_SECRET, {
-                expiresIn: '7d', // 7일
-                issuer: '토큰발급자',
-            });
-            req.body.token = token;
-            const jsonData = commonModule.toJsonData('success', '토큰이 발급되었습니다.', [{ mb_id: mb_id, token: token }]);
-            return res.send(jsonData);
-        } catch (err) {
-            const jsonData = commonModule.toJsonData('error', '서버 에러', [{}]);
-            return res.status(400).json(jsonData);
-        }
-    }
+    , middelwareMember.checkMember4
+    // , async (req, res, next) => {
+    //     try {
+    //         const mb_id = req.param('mb_id');
+    //         const password = req.param('password');
+    //         const token = jwt.sign({
+    //             mb_id,
+    //             password
+    //         }, process.env.JWT_SECRET, {
+    //             expiresIn: '7d', // 7일
+    //             issuer: '토큰발급자',
+    //         });
+    //         req.body.token = token;
+    //         const jsonData = commonModule.toJsonData('success', '토큰이 발급되었습니다.', [{ mb_id: mb_id, token: token }]);
+    //         return res.send(jsonData);
+    //     } catch (err) {
+    //         const jsonData = commonModule.toJsonData('error', '서버 에러', [{}]);
+    //         return res.status(400).json(jsonData);
+    //     }
+    // }
 )
 
 /**
