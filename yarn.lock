@@ -681,6 +681,13 @@ error-ex@^1.2.0:
   dependencies:
     is-arrayish "^0.2.1"
 
+error-to-json@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/error-to-json/-/error-to-json-2.0.0.tgz#481a8a9db696d9474f3a8e1f12a80a94067238a9"
+  integrity sha512-otH3QFto04cmkAjQwZTB1xFCF0rR/scHjL2U9yrmZNh/jNieJiNSP5ybvjCCaaUHaZ5nQD33SfGhWNyzsZR9EQ==
+  dependencies:
+    fast-safe-stringify "^2.0.7"
+
 escape-goat@^2.0.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/escape-goat/-/escape-goat-2.1.1.tgz#1b2dc77003676c457ec760b2dc68edb648188675"
@@ -752,6 +759,11 @@ express@~4.16.1:
     type-is "~1.6.16"
     utils-merge "1.0.1"
     vary "~1.1.2"
+
+fast-safe-stringify@^2.0.7:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.1.1.tgz#c406a83b6e70d9e35ce3b30a81141df30aeba884"
+  integrity sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
 
 fill-range@^7.0.1:
   version "7.0.1"

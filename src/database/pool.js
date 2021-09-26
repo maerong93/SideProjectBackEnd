@@ -12,6 +12,7 @@ module.exports = {
             const [row] = await conn.query(query);
             return row;
         }catch(e){
+            console.log(e);
             throw new Error(e); // 에러 throw
         }finally{
             conn.release(); // poll을 돌려주는 역할함
@@ -24,12 +25,19 @@ module.exports = {
             const [row] = await conn.query(query, values);
             return row;
         } catch (e) {
+            throw new Error(e); // 에러 throw
+        }finally{
             conn.release();
         }
     },
 
-    rowDataToArr : (rows) => {
-        return Object.values(JSON.parse(JSON.stringify(rows)));
+    textRowDel : (rows) => {
+        try {
+            const jsonRows = Object.values(JSON.parse(JSON.stringify(rows)));    
+            return jsonRows;
+        } catch (error) {
+            throw new Error(e); //에러 throw
+        }
     }
 }
  
