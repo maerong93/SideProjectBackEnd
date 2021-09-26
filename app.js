@@ -24,8 +24,6 @@ if (!fs.existsSync(dirItem)) {
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const apiUser = require('./routes/api/user');
-const apiItem = require('./routes/api/item');
 const cors = require('cors');
 const apiPath = '/api';
 
@@ -43,12 +41,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(cors());
-
-
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
-app.use(`${apiPath}/user`, apiUser);
-app.use(`${apiPath}/item`, apiItem);
+
 
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
