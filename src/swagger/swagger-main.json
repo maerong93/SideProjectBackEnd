@@ -1,0 +1,15 @@
+{
+    "openapi":"3.0.2",
+    "info": {
+        "title":"백엔드 사이드 프로젝트",
+        "version":"1.0"
+    },
+    "servers": [
+        {"url":"http://localhost:3000/api-doc/"}
+    ],
+    "paths": {
+        "/user":{
+            "$ref": "./swagger-user.json"
+        }
+    }
+}
