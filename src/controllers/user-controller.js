@@ -31,12 +31,20 @@ module.exports = {
             return res.status(500).json(errToJson(error));
         }
     },
-    getUser : async (req, res, next) => {
+    getUser : async (req, res, next) => { // post 방식 
         let mb_id = req.body.mb_id;
-        let mb_password = req.body.mb_password;
         try {
-            let rows = await UserService.getUser(mb_id, mb_password);
+            let rows = await UserService.getUser2(mb_id);
             //console.log(rows);
+            return res.json(rows);
+        } catch (error) {
+            return res.status(500).json(errToJson(error));
+        }
+    },
+    getUser2 : async (req, res, next) => { // get 방식
+        let mb_id = req.param('mb_id');
+        try {
+            let rows = await UserService.getUser2(mb_id);
             return res.json(rows);
         } catch (error) {
             return res.status(500).json(errToJson(error));
