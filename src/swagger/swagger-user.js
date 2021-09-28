@@ -2,7 +2,7 @@
 /**
  * @swagger
  * /api/user/login:
- *  get:
+ *  post:
  *      tags: 
  *       - user
  *      summary: "로그인"
@@ -11,12 +11,12 @@
  *      - "application/json"
  *      parameters:
  *      - name : "mb_id"
- *        in: "query"
+ *        in: "formData"
  *        description: "회원아이디"
  *        required: ture
  *        type: "string"
  *      - name : "mb_password"
- *        in: "query"
+ *        in: "formData"
  *        description: "회원 비밀번호"
  *        required: true
  *        type: "string"
