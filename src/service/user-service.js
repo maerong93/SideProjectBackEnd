@@ -21,5 +21,15 @@ module.exports = {
             console.log(error);
             throw new Error(error);
         }
-    }
+    },
+    register : async (mb_id, mb_password, mb_name, mb_level, mb_sex, mb_email, mb_tel,mb_phone,mb_addr1,mb_addr2,mb_ip,in_datetime) => {
+            try {
+                let values = [mb_id , mb_password , mb_name , mb_level , mb_sex , mb_email , mb_tel ,mb_phone ,mb_addr1 ,mb_addr2 , mb_ip , in_datetime];
+                let result =  await pool.queryParams(userQuery.register, values);
+                return result;
+            } catch (error) {
+                console.log(error);
+                throw new Error(error);
+            }
+        }
 }
