@@ -1,11 +1,11 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const swaggerUI = require('swagger-ui-express');
-const swaggerJsDoc = require('swagger-jsdoc');
-const swaggerOptions = require('./swagger/basic').swaggerOption;
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerSpec = require('./src/swagger/swagger-main');
 const fs = require('fs');
 require('dotenv').config();
 
@@ -22,13 +22,13 @@ if (!fs.existsSync(dirItem)) {
 }
 
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-const apiUser = require('./src/routes/user-router');
+const indexRouter = require('./routes/index');
+// const usersRouter = require('./routes/users');
+const usersRouter = require('./src/routes/user-router');
 const cors = require('cors');
-const apiPath = '/api';
 
-var app = express();
+
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -43,13 +43,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cors());
 app.use('/', indexRouter);
-app.use('/user', usersRouter);
-app.use('/api-docs/user', apiUser);
+app.use('/api/user', usersRouter);
 
 
 
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use('/api-docs/', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+const swaggerUISetup = swaggerJsdoc(swaggerSpec.swaggerOption);
+app.use('/api-docs/', swaggerUI.serve, swaggerUI.setup(swaggerUISetup));
 
 
 // catch 404 and forward to error handler
