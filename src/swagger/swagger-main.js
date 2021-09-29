@@ -18,12 +18,17 @@ basicExports.swaggerOption = {
             {
                 name: "user",
                 description: "회원에 관한 처리",
+            },
+            {
+                name : "item",
+                description: "상품 관한 처리",
             }
         ],
         schemes: ['http']
     },
     apis: [
         "./src/swagger/swagger-user.js",
+        "./src/swagger/swagger-item.js",
     ]
 }
 
