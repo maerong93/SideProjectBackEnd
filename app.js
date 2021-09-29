@@ -1,35 +1,41 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+const config = require('./src/config/config')
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const swaggerUI = require('swagger-ui-express');
-const swaggerJsDoc = require('swagger-jsdoc');
-const swaggerOptions = require('./swagger/basic').swaggerOption;
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerSpec = require('./src/swagger/swagger-main');
 const fs = require('fs');
 require('dotenv').config();
 
-const dir = process.env.FILE_PATH; // 내컴 폴더 경로
-const dirItem = process.env.FILE_ITEM_PATH; // 내컴 item 폴더 경로
+
+console.log(config);
 
 // data 최상위 폴더 생성
-if (!fs.existsSync(dir)) {
-  fs.mkdirSync(dir);
+if (!fs.existsSync(config.filePath.root)) {
+  fs.mkdirSync(config.filePath.root);
 }
 // item 폴더 생성
-if (!fs.existsSync(dirItem)) {
-  fs.mkdirSync(dirItem);
+if (!fs.existsSync(config.filePath.item)) {
+  fs.mkdirSync(config.filePath.item);
+}
+
+// session 폴더 생성
+if (!fs.existsSync(config.filePath.session)) {
+  fs.mkdirSync(config.filePath.session);
 }
 
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-const apiUser = require('./routes/api/user');
-const apiItem = require('./routes/api/item');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./src/routes/user-router');
 const cors = require('cors');
-const apiPath = '/api';
 
-var app = express();
+
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -43,16 +49,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(cors());
+const sessionConfig = config.ConfigSession;
+const ConfigFileStore = config.ConfigFileStore;
 
+app.use(session({
+  secret : sessionConfig.secret,
+  resave : sessionConfig.resave,
+  saveUninitialized : sessionConfig.saveUninitialized,
+  store : new FileStore({
+    path: ConfigFileStore.path
+  })
+}))
 
 app.use('/', indexRouter);
-app.use('/user', usersRouter);
-app.use(`${apiPath}/user`, apiUser);
-app.use(`${apiPath}/item`, apiItem);
+app.use('/api/user', usersRouter);
 
 
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use('/api-docs/', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+
+const swaggerUISetup = swaggerJsdoc(swaggerSpec.swaggerOption);
+app.use('/api-docs/', swaggerUI.serve, swaggerUI.setup(swaggerUISetup));
 
 
 // catch 404 and forward to error handler

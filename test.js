@@ -4,6 +4,7 @@ require('dotenv').config();
 const date = require('date-and-time');
 const { getMember } = require('./lib/common.lib');
 const poolConnection = require('./lib/mysql2Pool');
+// (async function (){
 
 // let rows = getMember('jack').then((item) => {
 //     console.log(item[0].id);
