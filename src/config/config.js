@@ -24,5 +24,11 @@ module.exports = {
         root : path.normalize(process.cwd()+'/data'),
         item : path.normalize(process.cwd()+'/data/item'),
         session : path.normalize(process.cwd()+'/data/session')
+    },
+
+    fileUrl : {
+        root : "",
+        item : "",
+        session : "",
     }
 };

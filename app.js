@@ -11,9 +11,10 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerSpec = require('./src/swagger/swagger-main');
 const fs = require('fs');
 require('dotenv').config();
+const fileUrl = require('./src/config/config').fileUrl;
 
 
-console.log(config);
+//console.log(config);
 
 // data 최상위 폴더 생성
 if (!fs.existsSync(config.filePath.root)) {
@@ -32,6 +33,7 @@ if (!fs.existsSync(config.filePath.session)) {
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./src/routes/user-router');
+const ItemRouter = require('./src/routes/item-router');
 const cors = require('cors');
 
 
@@ -47,7 +49,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+// fileUrl 설정 (ㅡ.ㅡ URL 이쁘게 구해주는건 없나???? ...)
+app.all("*", (req, res, next) => {
+  //console.log(req.get('host'));
+  fileUrl.root = req.protocol+'://'+req.get('host')+'/data';
+  fileUrl.item = req.protocol+'://'+req.get('host')+'/data/item';
+  fileUrl.session = req.protocol+'://'+req.get('host')+'/data/session';
+  next();
+});
 app.use(cors());
 const sessionConfig = config.ConfigSession;
 const ConfigFileStore = config.ConfigFileStore;
@@ -63,6 +72,7 @@ app.use(session({
 
 app.use('/', indexRouter);
 app.use('/api/user', usersRouter);
+app.use('/api/item', ItemRouter);
 
 
 

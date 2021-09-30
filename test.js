@@ -4,6 +4,71 @@ require('dotenv').config();
 const date = require('date-and-time');
 const { getMember } = require('./lib/common.lib');
 const poolConnection = require('./lib/mysql2Pool');
+const itemService = require('./src/service/item-service');
+const url = require('url');
+
+// ( async function()  {
+//     let result = await itemService.addItem('2', '2','1', '1',
+//                               '1', '1','1', '1',
+//                               '0000-00-00 00:00:00'
+//                               );
+//   console.log('insert result : ', result);
+//   /**
+//    *  ResultSetHeader {
+//       fieldCount: 0,
+//       affectedRows: 1,
+//       insertId: 7,
+//       info: '',
+//       serverStatus: 2,
+//       warningStatus: 0
+//     }
+//    * 
+//    */
+// })();
+
+// ( async function()  {
+//   let result = await itemService.updateItem('2', '2','1', '1',
+//                             '1', '1','1', '1',
+//                             '0000-00-00 10:00:00', '1'
+//                             );
+// console.log('update result : ', result);
+// /**
+//  * update result :  ResultSetHeader {
+//   fieldCount: 0,
+//   affectedRows: 1,
+//   insertId: 0,
+//   info: '(Rows matched: 1  Changed: 1  Warnings: 0',
+//   serverStatus: 2,
+//   warningStatus: 0,
+//   changedRows: 1
+// }
+//  * 
+//  * 
+//  */
+// })();
+
+( async function()  {
+  let result = await itemService.deleteItem('1');
+console.log('delete result : ', result);
+/*
+delete result :  ResultSetHeader {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 0,
+  info: '',
+  serverStatus: 2,
+  warningStatus: 0
+}
+*/
+})();
+
+
+console.log(url.host);
+
+// const url = window.location.origin;
+// console.log(url);
+//console.log(req.url)
+
 // (async function (){
 
 // let rows = getMember('jack').then((item) => {
@@ -48,19 +113,19 @@ let sql = `
 //     nowDateTime
 // ];
 
-let values = [
-    '1', '1',
-    '1', '1',
-    '1', '1',
-    '1', '1'
+// let values = [
+//     '1', '1',
+//     '1', '1',
+//     '1', '1',
+//     '1', '1'
     
-];
-let ttt = async function() {
-    await poolConnection.query(sql, values);
-    console.log('success!');
-}
+// ];
+// let ttt = async function() {
+//     await poolConnection.query(sql, values);
+//     console.log('success!');
+// }
 
-ttt();
+// ttt();
 
 
 

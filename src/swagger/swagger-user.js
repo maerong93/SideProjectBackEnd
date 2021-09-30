@@ -103,8 +103,6 @@
  *        description: "주소2"
  *        required: true
  *        type: "string"
- *      security : 
- *          - jwt: []
  *      responses:
  *          "200":
  *              description: "success"

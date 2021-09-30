@@ -5,6 +5,7 @@ const commonLib = require('../util/common.lib');
 
 module.exports = {
     loginUser : async (req, res, next) => {
+        console.log('loginUser-controller', req.body);
         let mb_id = req.body.mb_id;
         let mb_password = req.body.mb_password;
         try {
