@@ -137,5 +137,17 @@ module.exports = {
         } catch (error) {
             return res.status(500).json(errToJson(error));
         }
-    }    
+    },
+    deleteItem : async (req, res, next) => {
+        try {
+            let it_id = req.params.it_id;
+            let result = await itemService.deleteItem(it_id);
+            if(result.affectedRows > 0){
+                return res.json({ status: "success", msg : "상품 삭제됨", data : [{'affectedRows' : result.affectedRows}]});
+            }
+            return res.status(500).json({ status: "error", msg : "상품 삭제 실패 또는 없는 상품", data : []});
+        } catch (error) {
+            return res.status(500).json(errToJson(error));
+        }
+    }, 
 }

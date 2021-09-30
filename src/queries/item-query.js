@@ -20,5 +20,6 @@ module.exports = {
                            , it_use = ? , it_main_img = ? , mb_id = ? , mb_name = ? 
                            , up_datetime = ?
                         WHERE id = ? 
-  `,                  
+                  `,                  
+    deleteItem : " DELETE item FROM item WHERE id = ?  ",
 }

@@ -17,6 +17,7 @@ router.put('/', auth.authGet
                , commonLib.fileUploadCheck([{name : 'it_main_img', required : false}])
                , ItemController.updateItem
             );
+router.delete('/:it_id', auth.authGet, ItemController.deleteItem);
 
 
 

@@ -55,5 +55,14 @@ module.exports = {
             console.log(error);
             throw new Error(error);
         }
+    },
+    deleteItem : async (it_id) => {
+        try {
+            let result = await pool.queryParams(itemQuery.deleteItem, [it_id]);
+            return result;
+        } catch (error) {
+            console.log(error);
+            throw new Error(error);
+        }
     }
 }

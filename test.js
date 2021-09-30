@@ -26,14 +26,42 @@ const url = require('url');
 //    */
 // })();
 
-( async function()  {
-  let result = await itemService.updateItem('2', '2','1', '1',
-                            '1', '1','1', '1',
-                            '0000-00-00 10:00:00', '1'
-                            );
-console.log('update result : ', result);
+// ( async function()  {
+//   let result = await itemService.updateItem('2', '2','1', '1',
+//                             '1', '1','1', '1',
+//                             '0000-00-00 10:00:00', '1'
+//                             );
+// console.log('update result : ', result);
+// /**
+//  * update result :  ResultSetHeader {
+//   fieldCount: 0,
+//   affectedRows: 1,
+//   insertId: 0,
+//   info: '(Rows matched: 1  Changed: 1  Warnings: 0',
+//   serverStatus: 2,
+//   warningStatus: 0,
+//   changedRows: 1
+// }
+//  * 
+//  * 
+//  */
+// })();
 
+( async function()  {
+  let result = await itemService.deleteItem('1');
+console.log('delete result : ', result);
+/*
+delete result :  ResultSetHeader {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 0,
+  info: '',
+  serverStatus: 2,
+  warningStatus: 0
+}
+*/
 })();
+
 
 console.log(url.host);
 
