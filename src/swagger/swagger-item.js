@@ -17,6 +17,30 @@
  * 
  */
 
+/**
+ * @swagger
+ * /api/item/{it_id}:
+ *   get:
+ *      tags:
+ *      - item
+ *      summary: "상품 정보"
+ *      description: "상품 정보"
+ *      produces:
+ *      - "application/json"
+ *      parameters:
+ *      - name : "it_id"
+ *        in: "path"
+ *        description: "상품 번호"
+ *        required: ture
+ *        type: "integer"
+ *      responses:
+ *          "200":
+ *              description: "success"
+ *          "400":
+ *              description: "error"
+ * 
+ */
+
 
 /**
  * @swagger
@@ -82,7 +106,7 @@
  *        in: "formData"
  *        description: "상품 번호"
  *        required: ture
- *        type: "string"
+ *        type: "integer"
  *      - name : "it_name"
  *        in: "formData"
  *        description: "상품명"

@@ -12,6 +12,16 @@ module.exports = {
             throw new Error(error);
         }
     },
+    getItem  : async (it_id) => {
+        try {
+            let result =  await pool.queryParams(itemQuery.getItem, [it_id]);    
+            let rows = pool.textRowDel(result);
+            return rows;
+        } catch (error) {
+            console.log(error);
+            throw new Error(error);
+        }
+    },
     addItem : async (
         it_name , it_cnt, it_info , it_price ,
         it_use  , it_main_img     , mb_id    , mb_name,

@@ -24,6 +24,23 @@ module.exports = {
         }
         
     },
+    getItem : async (req, res, next) => {
+        try {
+            let it_id = req.params.it_id;
+            let rows = await itemService.getItem(it_id);
+            if(rows.length > 0){
+                let data = JSON.stringify(rows , (key, value) => { 
+                    return key === 'it_main_img' ? config.fileUrl.item+'/'+value : value;
+                });
+                data = JSON.parse(data)
+                return res.json({ status: "success", msg : "상품", data : data});
+            }else{
+                return res.json({ status: "success", msg : "상품이 없음", data : [rows]});
+            }
+        } catch (error) {
+            return res.status(500).json(errToJson(error));
+        }
+    },
     addItem : async (req, res, next) => {
         let it_name = req.body.it_name;
         let it_cnt = req.body.it_cnt;
