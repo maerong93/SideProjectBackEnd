@@ -14,7 +14,7 @@ require('dotenv').config();
 const fileUrl = require('./src/config/config').fileUrl;
 
 
-console.log(config);
+//console.log(config);
 
 // data 최상위 폴더 생성
 if (!fs.existsSync(config.filePath.root)) {
@@ -51,7 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // fileUrl 설정 (ㅡ.ㅡ URL 이쁘게 구해주는건 없나???? ...)
 app.all("*", (req, res, next) => {
-  console.log(req.get('host'));
+  //console.log(req.get('host'));
   fileUrl.root = req.protocol+'://'+req.get('host')+'/data';
   fileUrl.item = req.protocol+'://'+req.get('host')+'/data/item';
   fileUrl.session = req.protocol+'://'+req.get('host')+'/data/session';
