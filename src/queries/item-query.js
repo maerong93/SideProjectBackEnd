@@ -14,4 +14,10 @@ module.exports = {
                         ?
                     )
                   `,
+    updateItem :    ` UPDATE item 
+                         SET it_name = ? , it_cnt = ? , it_info = ? , it_price = ?
+                           , it_use = ? , it_main_img = ? , mb_id = ? , mb_name = ? 
+                           , up_datetime = ?
+                        WHERE id = ? 
+  `,                  
 }

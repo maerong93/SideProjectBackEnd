@@ -10,6 +10,12 @@ router.post('/', auth.authGet
                , commonLib.fileUploadCheck([{name : 'it_main_img', required : false}])
                , ItemController.addItem
             );
+router.put('/', auth.authGet
+               , commonLib.fileUpload('/item').fields([{name : 'it_main_img'}])
+               , commonLib.fileUploadCheck([{name : 'it_main_img', required : false}])
+               , ItemController.updateItem
+            );
+
 
 
 

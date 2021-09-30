@@ -28,5 +28,22 @@ module.exports = {
             console.log(error);
             throw new Error(error);
         }
+    },
+    updateItem : async (
+         it_name , it_cnt, it_info , it_price ,
+         it_use  , it_main_img     , mb_id  , mb_name ,
+        up_datetime , it_id
+    ) => {
+        try {
+            let result = await pool.queryParams(itemQuery.updateItem, [
+                it_name , it_cnt       , it_info , it_price ,
+                it_use  , it_main_img  , mb_id   , mb_name ,
+                up_datetime , it_id
+            ]);
+            return result;
+        } catch (error) {
+            console.log(error);
+            throw new Error(error);
+        }
     }
 }

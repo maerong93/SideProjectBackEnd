@@ -47,7 +47,8 @@ module.exports = {
         let mb_name = '';
         try {
             mb_id = req.session.mb_id;
-            mb_name = await userService.getUser2(mb_id);    
+            let mbinfo = await userService.getUser2(mb_id);
+            mb_name = mbinfo[0].mb_name;
         } catch (error) {
             return res.status(500).json(errToJson(error));
         }
@@ -67,5 +68,57 @@ module.exports = {
         } catch (error) {
             return res.status(500).json(errToJson(error));
         }
-    }
+    },
+    updateItem : async (req, res, next) => {
+        let it_id = '';
+        try {
+            it_id = req.body.it_id;    
+        } catch (error) {
+            return res.status(500).json({ status: "error", msg : "수정 실패, it_id이 비어있음", data : []});
+        }
+        
+        let it_name = req.body.it_name;
+        let it_cnt = req.body.it_cnt;
+        let it_info = req.body.it_info;
+        let it_price = req.body.it_price;
+        //console.log(req.files);
+
+        let it_use = req.body.it_use;
+        let it_hit = req.body.it_hit;
+        console.log('controll : ', req.files);
+        let it_main_img = '';
+        
+        try {
+            it_main_img = req.files.it_main_img[0].filename;    
+        } catch (error) {
+            console.log(error);
+            it_main_img = '';
+        }
+        
+        let mb_id = '';
+        let mb_name = '';
+        try {
+            mb_id = req.session.mb_id;
+            let mbinfo = await userService.getUser2(mb_id);
+            mb_name = mbinfo[0].mb_name;
+        } catch (error) {
+            return res.status(500).json(errToJson(error));
+        }
+        let up_datetime = commonLib.getDate.dateTime;
+
+        try {
+            let result = await itemService.updateItem(
+                it_name , it_cnt      , it_info , it_price, 
+                it_use  , it_main_img , mb_id   , mb_name ,
+                up_datetime , it_id
+            );       
+            
+            if(result.changedRows > 0){
+                return res.json({ status: "success", msg : "상품 수정됨", data : [{'changedRows' : result.changedRows}]});
+            }
+            return res.status(500).json({ status: "error", msg : "상품 수정 실패", data : []});
+        } catch (error) {
+            return res.status(500).json(errToJson(error));
+        }
+    }    
 }
