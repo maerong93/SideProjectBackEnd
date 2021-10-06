@@ -2,13 +2,14 @@
  * DB 연결 설정 처리 
  */
 const mysql = require('mysql2/promise');
+const config = require('../config/config');
 
 const dbConfig = {
-    host: '192.168.26.134',
-    port: '3306',
-    user: 'root', 
-    password : 'autoset',
-    database: 'sideshop',
+    host: config.ConfigDatabase.host,
+    port: config.ConfigDatabase.port,
+    user: config.ConfigDatabase.user, 
+    password : config.ConfigDatabase.password,
+    database: config.ConfigDatabase.database,
     connectionLimit: 10,
 }
 
