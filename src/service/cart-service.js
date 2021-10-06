@@ -34,5 +34,14 @@ module.exports = {
             console.log(error);
             throw new Error(error);
         }
+    },
+    delCart : async (ct_id) => {
+        try {
+            let result = await pool.queryParams(cartQuery.delCart, [ct_id]);
+            return result;
+        } catch (error) {
+            console.log(error);
+            throw new Error(error);
+        }
     }
 }

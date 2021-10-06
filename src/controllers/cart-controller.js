@@ -106,5 +106,17 @@ module.exports = {
         } catch (error) {
             return res.status(500).json(errToJson(error));
         }
+    },
+    delCart : async (req, res, next) => {
+        try {
+            let ct_id = req.body.ct_id;
+            let result = await cartService.delCart(ct_id);
+            console.log(result);
+            if(result.affectedRows > 0){
+                return res.json({ status: "success", msg : "장바구니 삭제됨", data : [{'changedRows' : result.affectedRows}]});
+            }
+        } catch (error) {
+            return res.status(500).json(errToJson(error));
+        }
     }
 }

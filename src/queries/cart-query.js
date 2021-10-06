@@ -33,5 +33,8 @@ module.exports = {
                          , up_datetime = ?
                      WHERE id = ? 
                        AND it_id = ? 
-                `
+                `,
+    delCart : ` 
+                DELETE FROM cart WHERE id = ?
+              `
 }
