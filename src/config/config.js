@@ -8,6 +8,7 @@ module.exports = {
         password : 'autoset',
         database: 'sideshop',
         connectionLimit: 10,
+        dateStrings: 'date',
     },
 
     ConfigSession : {

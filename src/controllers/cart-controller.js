@@ -7,6 +7,25 @@ const userService = require('../service/user-service');
 
 
 module.exports = {
+    getCartList : async (req, res, next) => {
+        let mb_id = '';
+        try {
+            mb_id = req.session.mb_id;
+            let rows = await cartService.getCartList(mb_id);
+            console.log(rows);
+            if(rows.length){
+                let data = JSON.stringify(rows, (key, value) => {
+                    return key === 'it_main_img' ? config.fileUrl.item+'/'+value : value;
+                });
+                data = JSON.parse(data);
+                return res.json({ status: "success", msg : "장바구니 리스트", data : data});
+            }else{
+                return res.json({ status: "success", msg : "장바구니 비었음", data : []});
+            }
+        } catch (error) {
+            return res.status(500).json(errToJson(error));
+        }
+    },
     addCart : async (req, res, next) => {
         let it_id = '';
         let mb_name = '';
@@ -14,7 +33,7 @@ module.exports = {
         let it_price = '';
         let ct_cnt = '';
         let mb_id = '';
-        let ca_datetime = commonLib.getDate.dateTime;
+        let ct_datetime = commonLib.getDate.dateTime;
         let in_datetime = commonLib.getDate.dateTime;
         
         try {
@@ -39,7 +58,7 @@ module.exports = {
                 mb_name = rows2[0].mb_name;
 
                 let result =  await cartService.addCart(it_id, it_name, it_price, ct_cnt, 
-                                                        mb_id, mb_name, ca_datetime, in_datetime);
+                                                        mb_id, mb_name, ct_datetime, in_datetime);
 
                 if(result.insertId > 0){
                     return res.json({ status: "success", msg : "저장됨", data : [{'insertId' : result.insertId}]});

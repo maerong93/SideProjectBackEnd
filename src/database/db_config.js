@@ -11,6 +11,7 @@ const dbConfig = {
     password : config.ConfigDatabase.password,
     database: config.ConfigDatabase.database,
     connectionLimit: 10,
+    dateStrings : config.ConfigDatabase.dateStrings,
 }
 
 module.exports =  mysql.createPool(dbConfig);
