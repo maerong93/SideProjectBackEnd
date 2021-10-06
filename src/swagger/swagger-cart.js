@@ -18,7 +18,7 @@
 
 /**
  * @swagger
- * /api/cart/:
+ * /api/cart:
  *  post: 
  *      tags: 
  *      - cart
@@ -57,16 +57,16 @@
  *      - "application/json"
  *      parameters:
  *      - name : ct_id
- *        in : "fromData"
+ *        in : "formData"
  *        description: "장바구니 아이디"
  *        required: ture
  *        type: "integer"
  *      - name : "it_id"
- *        in : "fromData"
+ *        in : "formData"
  *        description: "상품 아이디"
  *        required: ture
  *        type: "integer"
- *      - name : "ca_cnt"  
+ *      - name : "ct_cnt"  
  *        in: "formData"
  *        description: "수량"
  *        required: ture
@@ -91,7 +91,7 @@
  *      - "application/json"
  *      parameters:
  *      - name : ct_id
- *        in : "fromData"
+ *        in : "formData"
  *        description: "장바구니 아이디"
  *        required: ture
  *        type: "integer"

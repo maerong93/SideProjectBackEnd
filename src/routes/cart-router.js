@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middlewares/auth');
 const commonLib = require('../util/common.lib');
-const cartService = require('../controllers/cart-controller');
+const cartController = require('../controllers/cart-controller');
 
 //router.get('/')
-router.post('/', auth.authGet ,cartService.addCart);
+router.post('/', auth.authGet ,cartController.addCart);
+router.put('/', auth.authGet, cartController.updateCart);
 
 
 module.exports = router;

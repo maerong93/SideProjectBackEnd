@@ -16,5 +16,14 @@ module.exports = {
             console.log(error);
             throw new Error(error);
         }
+    },
+    updateCart : async ( ct_cnt , up_datetime, ct_id, it_id ) => {
+        try {
+            let result = await pool.queryParams(cartQuery.updateCart, [ ct_cnt , up_datetime, ct_id, it_id ]);
+            return result;
+        } catch (error) {
+            console.log(error);
+            throw new Error(error);
+        }
     }
 }
