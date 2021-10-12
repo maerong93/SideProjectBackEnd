@@ -53,6 +53,16 @@ module.exports = {
             return res.status(500).json(errToJson(error));
         }
     },
+    getUser3 : async (req, res, next) => { // 세션방식 방식 
+        let mb_id = req.session.mb_id;
+        try {
+            let rows = await UserService.getUser2(mb_id);
+            //console.log(rows);
+            return res.json(rows);
+        } catch (error) {
+            return res.status(500).json(errToJson(error));
+        }
+    },
     register : async (req, res, next) => {
         let mb_id = req.body.mb_id;
         let mb_password = req.body.mb_password;
