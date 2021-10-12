@@ -22,6 +22,10 @@ basicExports.swaggerOption = {
             {
                 name : "item",
                 description: "상품 관한 처리",
+            },
+            {
+                name : "cart",
+                description: "장바구니",
             }
         ],
         schemes: ['http']
@@ -29,6 +33,7 @@ basicExports.swaggerOption = {
     apis: [
         "./src/swagger/swagger-user.js",
         "./src/swagger/swagger-item.js",
+        "./src/swagger/swagger-cart.js",
     ]
 }
 

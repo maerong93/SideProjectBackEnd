@@ -34,6 +34,7 @@ if (!fs.existsSync(config.filePath.session)) {
 const indexRouter = require('./routes/index');
 const usersRouter = require('./src/routes/user-router');
 const ItemRouter = require('./src/routes/item-router');
+const cartRouter = require('./src/routes/cart-router');
 const cors = require('cors');
 
 
@@ -73,6 +74,7 @@ app.use(session({
 app.use('/', indexRouter);
 app.use('/api/user', usersRouter);
 app.use('/api/item', ItemRouter);
+app.use('/api/cart', cartRouter); 
 
 
 

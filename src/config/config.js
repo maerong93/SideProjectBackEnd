@@ -2,12 +2,13 @@ const path = require('path');
 
 module.exports = {
     ConfigDatabase : {
-        host: '192.168.26.134',
+        host: '10.10.27.120',
         port: '3306',
         user: 'root', 
         password : 'autoset',
         database: 'sideshop',
         connectionLimit: 10,
+        dateStrings: 'date',
     },
 
     ConfigSession : {

@@ -1,9 +1,9 @@
 const itemService = require('../service/item-service');
 const errToJson = require('error-to-json').default;
-const commonLib = require('../util/common.lib');;
+const commonLib = require('../util/common.lib');
 const config = require('../config/config');
 const multer = require('multer');
-const userService = require('../service/user-service')
+const userService = require('../service/user-service');
 
 
 module.exports = {
