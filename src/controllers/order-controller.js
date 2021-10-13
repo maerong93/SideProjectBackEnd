@@ -31,12 +31,12 @@ module.exports = {
                 let result =  await OrderService.tranOrder(ct_id_arr, od_addr2, od_addr2, od_tel, 
                                             od_hp, od_email, datetime, 1000, 
                                             datetime, mbinfo[0] );
-                return res.json({status: 'success', msg : '주문 성공', data: [{'주문아이디': result}]});
+                return res.json({status: 'success', msg : '주문 성공', data: result});
             }else{
                 return res.status(500).json({status: 'error', msg : '장바구니 번호 없어'});
             }
         } catch (error) {
-            return res.status(500).json(errToJson(error));
+            return res.status(500).json({status: 'error', msg : errToJson(error).message});
         }
         return res.json({status: 'error', msg : '메롱2'});
 

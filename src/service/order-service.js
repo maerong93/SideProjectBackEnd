@@ -26,10 +26,9 @@ const tranOrder = async (
                             od_hp, od_email, od_datetime, od_price,
                             in_datetime, mbinfo
                         ) => {
+                    const conn = await pool.getConn();
                     try {
-                        const conn = await pool.getConn();
-
-                        await conn.beginTransaction() // 트랜잭션 적용 시작
+                        await conn.beginTransaction(); // 트랜잭션 적용 시작
 
                         let cartResult =  await conn.query(cartQuery.getCartList2, [ct_id_arr]); // 장바구니 데이터 구함
                         let cartNotOrdered = null;
