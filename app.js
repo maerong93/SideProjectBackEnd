@@ -35,6 +35,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./src/routes/user-router');
 const ItemRouter = require('./src/routes/item-router');
 const cartRouter = require('./src/routes/cart-router');
+const OrderRouter = require('./src/routes/order-router');
 const cors = require('cors');
 
 
@@ -75,6 +76,7 @@ app.use('/', indexRouter);
 app.use('/api/user', usersRouter);
 app.use('/api/item', ItemRouter);
 app.use('/api/cart', cartRouter); 
+app.use('/api/order', OrderRouter);
 
 
 
