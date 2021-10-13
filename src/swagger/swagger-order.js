@@ -27,7 +27,6 @@
  *      description: "결제 처리"
  *      produces:
  *      - "application/json"
- *      requestBody:
  *      parameters:
  *      - name : "body"
  *        in: "body"
@@ -40,32 +39,22 @@
  *              type : array
  *              items : 
  *                  type: integer
- *              example: [1, 2, 3]
- *      - name : "od_addr1"
- *        in: "formData"
- *        description: "주소1"
- *        required: false
- *        type: "string"
- *      - name : "od_addr2"
- *        in: "formData"
- *        description: "주소2"
- *        required: false    
- *        type: "string"
- *      - name : "od_tel"
- *        in: "formData"
- *        description: "전화번호"
- *        required: false
- *        type: "string"
- *      - name : "od_hp"
- *        in: "formData"
- *        description: "핸드폰번호"
- *        required: false
- *        type: "string"
- *      - name : "od_email"
- *        in : "formData"
- *        description: "이메일주소"
- *        required: false
- *        type: "string"
+ *              example: [장바구니아이디1, 장바구니아이디2, 장바구니아이디3]
+ *           od_addr1 : 
+ *              type : string
+ *              example : "주소1"
+ *           od_addr2 : 
+ *              type : string
+ *              example : "주소1"
+ *           od_tel : 
+ *              type : string
+ *              example : "055-000-0000"
+ *           od_hp : 
+ *              type : string
+ *              example : "010-0000-0000"
+ *           od_email : 
+ *              type : string
+ *              example : "xxx@naver.com"
  *      responses:
  *          "200":
  *              description: "success"
