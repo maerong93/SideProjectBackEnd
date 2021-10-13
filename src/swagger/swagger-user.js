@@ -39,12 +39,6 @@
 *       description: "나의 정보"
 *       produces: 
 *       - "application/json"
-*       parameters:
-*       - name : mb_id
-*         in: "formData"
-*         description: "회원아이디"
-*         required: ture
-*         type: "string"
 *       responses:
 *           "200":
 *               description: "success"

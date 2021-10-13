@@ -15,6 +15,17 @@ module.exports = {
                     WHERE T1.mb_id = ?       
                       AND T1.od_id = 0
                   `,
+    getCartList2 : `
+                      SELECT id
+                           , od_id
+                           , it_id
+                           , it_name
+                           , it_price
+                           , ct_cnt
+                           , mb_id 
+                        FROM cart 
+                       WHERE id IN ( ? )
+                   `,
     addCart : `
                 INSERT cart
                    (
@@ -36,5 +47,17 @@ module.exports = {
                 `,
     delCart : ` 
                 DELETE FROM cart WHERE id = ?
-              `
+              `,
+    updateCartOder : ` 
+                        UPDATE cart
+                           SET od_id = ?
+                         WHERE od_id = 0
+                           AND id IN ( ? )
+                     `,
+    getCartSum : ` 
+                    SELECT SUM(it_price) AS sum
+                      FROM cart
+                     WHERE od_id = 0
+                       AND id IN ( ? )
+                 `
 }

@@ -6,6 +6,11 @@ const { getMember } = require('./lib/common.lib');
 const poolConnection = require('./lib/mysql2Pool');
 const itemService = require('./src/service/item-service');
 const url = require('url');
+const OrderService = require('./src/service/order-service');
+
+( async function() {
+  await OrderService.tranOrder([1,2], 2, 3, 4, 5, 6, 7, 8, 9, {mb_id : 'jack', mb_name : 'jack'});
+})();
 
 // ( async function()  {
 //     let result = await itemService.addItem('2', '2','1', '1',
@@ -47,9 +52,9 @@ const url = require('url');
 //  */
 // })();
 
-( async function()  {
-  let result = await itemService.deleteItem('1');
-console.log('delete result : ', result);
+// ( async function()  {
+//   let result = await itemService.deleteItem('1');
+// console.log('delete result : ', result);
 /*
 delete result :  ResultSetHeader {
   fieldCount: 0,
@@ -60,7 +65,7 @@ delete result :  ResultSetHeader {
   warningStatus: 0
 }
 */
-})();
+//})();
 
 
 console.log(url.host);

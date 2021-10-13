@@ -6,6 +6,16 @@ const poolPromise = require('./db_config');
 
 
 module.exports = {
+    getConn : async () => {
+        try {
+            const conn = await poolPromise.getConnection(); // 컨넥션 받음
+            return conn;    
+        } catch (error) {
+            console.log(e);
+            throw new Error(e); // 에러 throw
+        }
+        
+    },
     query : async (query) => {
         const conn = await poolPromise.getConnection(); // 컨넥션 받음
         try{
