@@ -59,7 +59,7 @@ app.all("*", (req, res, next) => {
   fileUrl.session = req.protocol+'://'+req.get('host')+'/data/session';
   next();
 });
-app.use(cors());
+app.use(cors(config.corsOptions));
 const sessionConfig = config.ConfigSession;
 const ConfigFileStore = config.ConfigFileStore;
 
