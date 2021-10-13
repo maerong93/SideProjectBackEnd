@@ -29,8 +29,8 @@ module.exports = {
             od_email = req.body.od_email === undefined ? mbinfo[0].mb_email : req.body.od_email;
             if(ct_id_arr.length > 0){
                 let result =  await OrderService.tranOrder(ct_id_arr, od_addr2, od_addr2, od_tel, 
-                                            od_hp, od_email, datetime, 1000, 
-                                            datetime, mbinfo[0] );
+                                            od_hp, od_email, datetime, datetime, 
+                                            mbinfo[0] );
                 return res.json({status: 'success', msg : '주문 성공', data: result});
             }else{
                 return res.status(500).json({status: 'error', msg : '장바구니 번호 없어'});

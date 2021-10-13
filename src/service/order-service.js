@@ -23,9 +23,10 @@ const addOrder = async (
                         };
 const tranOrder = async (
                             ct_id_arr, od_addr1, od_addr2, od_tel,
-                            od_hp, od_email, od_datetime, od_price,
-                            in_datetime, mbinfo
+                            od_hp, od_email, od_datetime, in_datetime, 
+                            mbinfo
                         ) => {
+                    let od_price = 0;
                     const conn = await pool.getConn();
                     try {
                         await conn.beginTransaction(); // 트랜잭션 적용 시작
@@ -38,9 +39,11 @@ const tranOrder = async (
                             cartNotOrdered = cartResult.map((cart) => {
                                 console.log('hello', cart);
                                 if(cart.od_id === 0){
+                                    od_price += cart.it_price;
                                     return cart;
                                 }
                             });
+                            console.log('od_price', od_price);
                             console.log('cartNotOrdered', cartNotOrdered.includes(undefined));
                             if(cartNotOrdered === null || cartNotOrdered.includes(undefined)){ // null 또는 undefined 하나라도 있다면
                                 throw new Error('주문한 장바구니 포함됨');
