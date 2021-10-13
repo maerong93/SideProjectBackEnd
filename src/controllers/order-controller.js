@@ -7,6 +7,16 @@ const commonLib = require('../util/common.lib');
 const mysqlUtil = require('../database/utile');
 
 module.exports = {
+    orderList : async (req, res, next) => {
+        try {
+            let result =  await OrderService.orderList(req.session.mb_id);    
+            return res.json({status : 'success', msg : '주문내역', data : result});
+        } catch (error) {
+            return res.status(500).json({status: 'error', msg : errToJson(error).message});
+        }
+        
+
+    },
     addOrder: async (req, res, next) => {
         let ct_id_arr =  [];
         let temp_ct_id_String =  '';

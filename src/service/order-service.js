@@ -4,11 +4,21 @@ const userQuery = require('../queries/user-query');
 const cartQuery = require('../queries/cart-query');
 
 
-const addOrder = async (
+const orderList = async (
+                            mb_id
+                        ) => {
+                            try {
+                                let result = await pool.queryParams(orderQuery.orderList, [mb_id]);
+                                return result;
+                            } catch (error) {
+                                throw new Error(error);
+                            }
+                        }
+const addOrder = async ( 
                             mb_id, mb_name, od_addr1, od_addr2,
                             od_tel, od_hp, od_email, od_datetime, 
                             od_price, in_datetime
-                        ) => {
+                        ) => { // 음... 사용안함 , 트랜젝션으로 처리함
                             try {
                                 let result = await pool.queryParams(orderQuery.addOrder, [
                                                     mb_id, mb_name, od_addr1, od_addr2,
@@ -85,6 +95,7 @@ const tranOrder = async (
                     }
                 };
 module.exports = {
+    orderList : orderList,
     addOrder : addOrder,
     tranOrder : tranOrder
 }
