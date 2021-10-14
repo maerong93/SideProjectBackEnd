@@ -50,6 +50,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/data/item', express.static(path.join(__dirname, 'data/item'))); 
 
 // fileUrl 설정 (ㅡ.ㅡ URL 이쁘게 구해주는건 없나???? ...)
 app.all("*", (req, res, next) => {
