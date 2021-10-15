@@ -4,6 +4,7 @@ module.exports = {
     getCartList : `
                     SELECT T1.id
                         , T1.it_id
+                        , T2.it_name
                         , T1.it_price
                         , T1.ct_cnt
                         , T1.ct_datetime
