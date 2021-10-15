@@ -81,7 +81,7 @@
 
 /**
  * @swagger
- * /api/cart/{ct_id}:
+ * /api/cart:
  *  delete: 
  *      tags: 
  *      - cart

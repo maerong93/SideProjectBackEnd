@@ -7,7 +7,7 @@ const cartController = require('../controllers/cart-controller');
 router.get('/', auth.authGet, cartController.getCartList);
 router.post('/', auth.authGet ,cartController.addCart);
 router.put('/', auth.authGet, cartController.updateCart);
-router.delete('/:ct_id', auth.authGet, cartController.delCart);
+router.delete('/', auth.authGet, cartController.delCart);
 
 
 module.exports = router;
