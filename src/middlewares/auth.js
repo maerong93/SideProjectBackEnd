@@ -19,7 +19,7 @@ module.exports = {
         return next();
     },
     authGet : async (req, res, next) => { // 세션 정보만 체크
-        console.log("req.session.mb_id1", req.session.mb_id);
+        //console.log("req.session.mb_id1", req.session);
         
         if(req.session.mb_id === '' || req.session.mb_id === undefined){
             return res.status(400).json({ status : 'error', msg : '세션 정보가 비어있습니다.'});

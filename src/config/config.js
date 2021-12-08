@@ -2,11 +2,11 @@ const path = require('path');
 
 module.exports = {
     ConfigDatabase : {
-        host: '10.10.27.120',
+        host: 'localhost',
         port: '3306',
         user: 'root', 
         password : 'autoset',
-        database: 'sideshop',
+        database: 'node',
         connectionLimit: 10,
         dateStrings: 'date',
     },

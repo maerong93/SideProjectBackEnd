@@ -5,7 +5,6 @@ const cartService = require('../service/cart-service');
 const itemService = require('../service/item-service');
 const userService = require('../service/user-service');
 
-
 module.exports = {
     getCartList : async (req, res, next) => {
         let mb_id = '';
@@ -77,12 +76,11 @@ module.exports = {
         let ct_cnt = '';
         let up_datetime = commonLib.getDate.dateTime;
         console.log('hello');
-        
         try {
             ct_id = req.body.ct_id;
             it_id = req.body.it_id;
             ct_cnt = req.body.ct_cnt;
-
+            console.log("ct_id= "+ct_id+"it_id= "+it_id+"ct_cnt= "+ct_cnt);
             let rows = await itemService.getItem(it_id); 
             if(rows.length > 0){
                 if(rows[0].it_use === 'N') { // 사용여부가 아니라면
@@ -94,7 +92,7 @@ module.exports = {
                     return res.json({ status: "success", msg : `남은 재고량이 ${rows[0].it_cnt}개 입니다.`, data : []});
                 }
 
-                let result = await cartService.updateCart(ct_cnt, up_datetime, ct_id, it_id);
+                let result = await cartService.updateCart(ct_cnt, ct_id, it_id);
                 
                 if(result.changedRows > 0){
                     return res.json({ status: "success", msg : "장바구니 수량 수정됨", data : [{'changedRows' : result.changedRows}]});
@@ -111,6 +109,7 @@ module.exports = {
         try {
             let ct_id = req.body.ct_id;
             let result = await cartService.delCart(ct_id);
+            console.log(req.body);
             console.log(result);
             if(result.affectedRows > 0){
                 return res.json({ status: "success", msg : "장바구니 삭제됨", data : [{'changedRows' : result.affectedRows}]});

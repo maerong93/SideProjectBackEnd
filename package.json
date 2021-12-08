@@ -6,6 +6,7 @@
     "start": "node ./bin/www",
     "start:dev": "nodemon --watch --inspect ./bin/www"
   },
+  
   "dependencies": {
     "5": "^0.0.1",
     "bluebird": "^3.7.2",

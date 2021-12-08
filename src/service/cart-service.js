@@ -36,9 +36,10 @@ module.exports = {
             throw new Error(error);
         }
     },
-    updateCart : async ( ct_cnt , up_datetime, ct_id, it_id ) => { // 장바구니 수정
+    updateCart : async ( ct_cnt , ct_id, it_id ) => { // 장바구니 수정
+        console.log("여기 연결이 됩니까?");
         try {
-            let result = await pool.queryParams(cartQuery.updateCart, [ ct_cnt , up_datetime, ct_id, it_id ]);
+            let result = await pool.queryParams(cartQuery.updateCart, [ ct_cnt , ct_id, it_id ]);
             return result;
         } catch (error) {
             console.log(error);

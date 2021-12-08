@@ -42,7 +42,7 @@ module.exports = {
     updateCart : `
                     UPDATE cart
                        SET ct_cnt = ? 
-                         , up_datetime = ?
+                         , up_datetime = now()
                      WHERE id = ? 
                        AND it_id = ? 
                 `,
